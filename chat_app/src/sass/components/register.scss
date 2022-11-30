@@ -1,0 +1,16 @@
+.register {
+    width: 100%;
+    height: 100vh;
+    background-color: #82cdf0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card {
+        .card-header {
+            h3 {
+                text-align: center;
+                color: black;
+            }
+        }
+    }
+}
