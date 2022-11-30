@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "server": "nodemon backend/server.js",
+    "server": "nodemon --experimental-modules --es-module-specifier-resolution=node backend/server.js",
     "client": "npm start --prefix chat_app",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -16,6 +17,7 @@
     "body-parser": "^1.20.1",
     "concurrently": "^7.6.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "formidable": "^2.0.1",

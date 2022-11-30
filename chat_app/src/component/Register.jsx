@@ -1,7 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userRegister } from "../store/actions/authAction.js";
+import axios from "axios";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    image: "",
+  });
+
+  const [loadImage, setLoadImage] = useState("");
+
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const fileHandle = (e) => {
+    if (e.target.files.length !== 0) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.files[0],
+      });
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        setLoadImage(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const register = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("username", state.username);
+    formData.append("email", state.email);
+    formData.append("password", state.username);
+    formData.append("confirmPassword", state.confirmPassword);
+    formData.append("image", state.image);
+
+    axios
+      .post("http://localhost:5000/register", formData)
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div className="register">
       <div className="card">
@@ -9,7 +61,7 @@ const Register = () => {
           <h3>Register</h3>
         </div>
         <div className="card-body">
-          <form>
+          <form onSubmit={register}>
             <div className="form-group">
               <label htmlFor="username">User Name:</label>
               <input
@@ -17,6 +69,9 @@ const Register = () => {
                 className="form-control"
                 placeholder="User name"
                 id="username"
+                onChange={inputHandle}
+                name="username"
+                value={state.username}
               />
               <br />
               <br />
@@ -26,6 +81,9 @@ const Register = () => {
                 className="form-control"
                 placeholder="Email"
                 id="email"
+                onChange={inputHandle}
+                name="email"
+                value={state.email}
               />
               <br />
               <br />
@@ -35,6 +93,9 @@ const Register = () => {
                 className="form-control"
                 placeholder="Password"
                 id="password"
+                onChange={inputHandle}
+                name="password"
+                value={state.password}
               />
               <br />
               <br />
@@ -44,14 +105,29 @@ const Register = () => {
                 className="form-control"
                 placeholder="Confirm password"
                 id="confirmPassword"
+                onChange={inputHandle}
+                name="confirmPassword"
+                value={state.confirmPassword}
               />
             </div>
             <div className="form-group">
               <div className="file-image">
-                <div className="image"></div>
+                <div className="image">
+                  {loadImage ? (
+                    <img src={loadImage} width="100px" height="100px" alt="#" />
+                  ) : (
+                    ""
+                  )}
+                </div>
                 <div className="file">
                   <label htmlFor="image">Select Image</label>
-                  <input type="file" className="form-control" id="image" />
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="image"
+                    onChange={fileHandle}
+                    name="image"
+                  />
                 </div>
               </div>
             </div>
