@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "server": "nodemon --experimental-modules --es-module-specifier-resolution=node backend/server.js",
+    "server": "nodemon backend/server.js",
     "client": "npm start --prefix chat_app",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

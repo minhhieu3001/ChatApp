@@ -1,26 +1,25 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import * as config from "./config/config";
-
-import authRouter from "./routes/authRoute";
-
-const PORT = config.PORT;
-
+const express = require("express");
 const app = express();
-// app.use(cors());
-// app.use(express.json({ extended: true }));
-// app.use(express.urlencoded({ extended: true }));
+const cors = require("cors");
+const dotenv = require("dotenv");
 
-mongoose
-  .connect(config.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("DB connected"))
-  .catch((e) => console.log(e));
+const databaseConnect = require("./config/database");
+const authRouter = require("./routes/authRoute");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
-app.use("/register", authRouter);
+dotenv.config({
+  path: "backend/config/config.env",
+});
+
+const PORT = process.env.PORT;
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use("/", authRouter);
+
+databaseConnect();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

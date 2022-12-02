@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userRegister } from "../store/actions/authAction.js";
-import axios from "axios";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -40,18 +39,18 @@ const Register = () => {
   };
 
   const register = (e) => {
+    const { username, email, password, confirmPassword, image } = state;
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("username", state.username);
-    formData.append("email", state.email);
-    formData.append("password", state.username);
-    formData.append("confirmPassword", state.confirmPassword);
-    formData.append("image", state.image);
 
-    axios
-      .post("http://localhost:5000/register", formData)
-      .catch((e) => console.log(e));
+    formData.append("userName", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("confirmPassword", confirmPassword);
+    formData.append("image", image);
+
+    dispatch(userRegister(formData));
   };
 
   return (
