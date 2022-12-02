@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEllipsisH, FaEdit, FaSistrix } from "react-icons/fa";
 
 const Messenger = () => {
   return (
@@ -16,7 +17,24 @@ const Messenger = () => {
                 </div>
               </div>
               <div className="icons">
-                <div className="icon"></div>
+                <div className="icon">
+                  <FaEllipsisH />
+                </div>
+                <div className="icon">
+                  <FaEdit />
+                </div>
+              </div>
+            </div>
+            <div className="friend-search">
+              <div className="search">
+                <button>
+                  <FaSistrix />
+                </button>
+                <input
+                  type="text"
+                  placeholder="search"
+                  className="form-control"
+                />
               </div>
             </div>
           </div>
